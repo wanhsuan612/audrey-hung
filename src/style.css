@@ -66,7 +66,7 @@ nav .links a:hover::after, .socials a:hover::after { transform: scaleX(1) rotate
 .progress path { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
 .progress .track { opacity: .15; }
 
-main { position: relative; z-index: 2; }
+main { position: relative; z-index: 2; overflow-x: clip; } /* 開場標題四散的字母不會把頁面撐寬 */
 section { position: relative; padding: 0 calc(var(--side) + clamp(16px, 8vw, 120px)); }
 .inner { position: sticky; top: 20vh; display: flex; flex-direction: column; }
 
@@ -78,9 +78,10 @@ section { position: relative; padding: 0 calc(var(--side) + clamp(16px, 8vw, 120
 
 /* 各段落高度：越高，鏡頭在那一段停留越久 */
 #about, #work { height: 220vh; }
+#projects { height: 200vh; }
 #contact { height: 160vh; }
 #about .inner { align-items: flex-end; }
-#work .inner { align-items: flex-start; top: 14vh; }
+#work .inner, #projects .inner { align-items: flex-start; top: 14vh; }
 #contact .inner { align-items: flex-start; top: 22vh; }
 .note.contact-note { transform: rotate(-1deg); width: fit-content; max-width: 100%; }
 .contact-note .mail { display: inline-block; }
@@ -120,6 +121,7 @@ h2 { font-size: clamp(48px, min(7.5vw, 13vh), 120px); margin: 0 0 .15em; font-we
 .timeline .note { max-width: 34em; padding: 12px 22px 10px; }
 .timeline .note:nth-child(odd) { transform: rotate(-.8deg); }
 .timeline .note:nth-child(even) { transform: rotate(.8deg); margin-left: 24px; }
+.timeline strong a { text-decoration: underline wavy var(--accent) 1.5px; text-underline-offset: 5px; }
 .timeline .when { display: block; font-family: 'Caveat', cursive; font-size: 26px; color: var(--accent); line-height: 1.2; }
 .wins { margin: 4px 0 0; padding-left: 1.1em; font-size: .88em; line-height: 1.45; }
 .wins li { margin: 2px 0; }
@@ -136,7 +138,9 @@ h2 { font-size: clamp(48px, min(7.5vw, 13vh), 120px); margin: 0 0 .15em; font-we
 
 @media (max-width: 700px) {
   #about .inner { align-items: flex-start; }
-  nav .links { font-size: 20px; }
+  nav { padding-top: 14px; padding-bottom: 14px; }
+  nav .logo { font-size: 24px; }
+  nav .links { font-size: 19px; gap: 12px; }
   .timeline .note:nth-child(even) { margin-left: 0; }
 }
 

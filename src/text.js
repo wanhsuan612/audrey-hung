@@ -49,10 +49,12 @@ export function setupText() {
     scrollTrigger: { trigger: '#about', start: 'top 50%', toggleActions: 'play none none reverse' },
   });
 
-  // 工作經歷：便條紙一張張貼上來
-  gsap.from('.timeline .note', {
-    y: 60, opacity: 0, rotate: () => gsap.utils.random(-6, 6), stagger: .15, duration: .8, ease: 'back.out(1.6)',
-    scrollTrigger: { trigger: '#work', start: 'top 50%', toggleActions: 'play none none reverse' },
+  // 工作經歷、Side Projects：便條紙一張張貼上來
+  document.querySelectorAll('.timeline').forEach(list => {
+    gsap.from(list.querySelectorAll(':scope > .note'), {
+      y: 60, opacity: 0, rotate: () => gsap.utils.random(-6, 6), stagger: .15, duration: .8, ease: 'back.out(1.6)',
+      scrollTrigger: { trigger: list.closest('section'), start: 'top 50%', toggleActions: 'play none none reverse' },
+    });
   });
 
   // 聯絡資訊

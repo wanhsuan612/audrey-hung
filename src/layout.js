@@ -78,12 +78,12 @@ export const petals = { count: 50, x: [-7, 7], y: [-3, 4], z: [-62, -54], size: 
  */
 export const cameraKeys = [
   [0,    0,    0,   10],    // 森林
-  [.13,  .3,   .2, -12],    // 到辦公桌
-  [.4,   .3,   .2, -14.5],  // 停留在 About Me
-  [.5,  -.5,   .3, -31],    // 飛到台北
-  [.77, -.5,   .3, -33.5],  // 停留在 Work Experience
-  [.88,  0,    .4, -51],    // 飛到東京
-  [1,    0,    .4, -53.5],  // 停留在 Contact
+  [.10,  .3,   .2, -12],    // 到辦公桌
+  [.34,  .3,   .2, -14.5],  // 停留在 About Me
+  [.44, -.5,   .3, -31],    // 飛到台北
+  [.62, -.5,   .3, -33.5],  // 停留在 Work Experience
+  [.72,  0,    .4, -51],    // 飛到東京
+  [1,    0,    .4, -53.5],  // 停留在 Side Projects 與 Contact
 ];
 
 // 每一段的背景色和文字色（依 section id）
@@ -91,5 +91,6 @@ export const themes = {
   home:    { paper: '#eaf0dc', ink: '#2b2622' },
   about:   { paper: '#f5e9d6', ink: '#2b2622' },
   work:    { paper: '#1c2340', ink: '#f3ecdf' },
+  projects: { paper: '#e2eef2', ink: '#2b2622' },
   contact: { paper: '#e2eef2', ink: '#2b2622' },
 };
