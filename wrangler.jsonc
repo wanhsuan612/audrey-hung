@@ -1,0 +1,9 @@
+// Cloudflare Workers 部署設定：把 Vite 打包出來的 dist/ 當成靜態網站發佈
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "audrey-hung",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./dist"
+  }
+}
