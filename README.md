@@ -24,7 +24,6 @@ npm run preview  # 預覽打包結果
 | `src/text.js` | 文字動畫 |
 | `src/sketch.js` | 手繪筆刷工具 |
 | `src/style.css` | 版面樣式 |
-| `prototype/` | 最早的單檔 prototype，保留參考 |
 
 ## 換成自己的手繪圖
 
