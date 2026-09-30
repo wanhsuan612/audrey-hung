@@ -74,7 +74,15 @@ h2 { font-size: clamp(52px, 7.5vw, 120px); margin: 0 0 .15em; font-weight: 700; 
   border: 2.5px solid var(--ink);
   border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
 }
-#about .note { transform: rotate(1.2deg); }
+/* About：便條紙 + 一天的時間軸 */
+#about { --accent: #b85c38; } /* 大地色系的陶土色 */
+#about .inner { top: 14vh; }
+.eyebrow { margin: 0; font-size: 28px; font-weight: 700; color: var(--accent); transform: rotate(-2deg); }
+.about-note { max-width: 28em; transform: rotate(1.2deg); }
+.about-note .lead { margin: 0 0 12px; }
+.day { list-style: none; margin: 0; padding: 10px 0 0; border-top: 2.5px dashed var(--ink); }
+.day li { display: grid; grid-template-columns: 3.4em 1fr; align-items: baseline; padding: 3px 0; }
+.day time { font-family: 'Caveat', cursive; font-size: 26px; font-weight: 700; color: var(--accent); }
 
 /* 工作經歷時間軸 */
 .timeline { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }

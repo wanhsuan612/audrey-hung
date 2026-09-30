@@ -39,6 +39,16 @@ export function setupText() {
     });
   });
 
+  // About：便條紙貼上來、一天的行程依序彈出
+  gsap.from('.eyebrow, .about-note', {
+    y: 50, opacity: 0, rotate: () => gsap.utils.random(-6, 6), stagger: .15, duration: .8, ease: 'back.out(1.6)',
+    scrollTrigger: { trigger: '#about', start: 'top 50%', toggleActions: 'play none none reverse' },
+  });
+  gsap.from('.day li', {
+    x: -24, opacity: 0, stagger: .1, duration: .6, ease: 'back.out(2)', delay: .4,
+    scrollTrigger: { trigger: '#about', start: 'top 50%', toggleActions: 'play none none reverse' },
+  });
+
   // 工作經歷：便條紙一張張貼上來
   gsap.from('.timeline .note', {
     y: 60, opacity: 0, rotate: () => gsap.utils.random(-6, 6), stagger: .15, duration: .8, ease: 'back.out(1.6)',

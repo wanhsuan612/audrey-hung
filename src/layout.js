@@ -4,7 +4,7 @@ import { rng } from './sketch.js';
 /*
  * 物件：[圖案, x, y, z, 寬度, 選項]
  *   x 左右、y 上下、z 前後（鏡頭從 z=10 往負的方向前進）
- *   選項 { rot: 旋轉, float: false 不要漂浮, anim: 'pulse' 煙火縮放 }
+ *   選項 { rot: 旋轉, float: false 不要漂浮, anim: 'pulse' 煙火 | 'steam' 熱氣 | 'flutter' 蝴蝶 | 'glide' 燕子 }
  */
 export const items = [
   // ── 1. 森林（z 8 ~ -6）──────────────────────────
@@ -26,14 +26,19 @@ export const items = [
   ['forest.bird', -1.5, 3, 0, 1.1, { rot: .1 }],
   ['forest.bird', 1.2, 3.3, -3, .9, { rot: -.1 }],
 
-  // ── 2. 辦公桌（z ≈ -21）─────────────────────────
-  ['desk.desk', -1, -2.74, -21, 7, { float: false }],
-  ['desk.monitor', -1.8, -0.3, -21.3, 3, { float: false }],
-  ['desk.mac', -0.1, -1.01, -20.8, 2, { float: false }],
-  ['desk.ipad', -3.8, -0.7, -20.9, 1.3, { float: false }],
-  ['desk.perfume', 1.6, -0.94, -20.7, .7, { float: false }],
-  ['desk.glasses', -2.1, -1.21, -20.6, 1.2, { float: false }],
-  ['desk.calendar', -4, 1.4, -21.4, 1.2, { float: false }],
+  // ── 2. 後端工程師的一天（z ≈ -21）─────────────────
+  ['desk.window', -3.3, 1.55, -21.8, 2, { float: false }],
+  ['desk.vase', -2.75, 0.9, -21.7, .42, { float: false }],
+  ['desk.calendar', 0.1, 1.75, -21.8, .75, { float: false }],
+  ['desk.desk', -1.15, -2.96, -21, 7.6, { float: false }],
+  ['desk.monitor', -1.9, -0.385, -21.2, 2.5, { float: false }],
+  ['desk.ipad', -3.95, -0.72, -20.9, 1.2, { float: false }],
+  ['desk.mac', -0.1, -0.9, -20.8, 1.8, { float: false }],
+  ['desk.latte', -3.05, -1.15, -20.6, .55, { float: false }],
+  ['desk.steam', -3.1, -0.85, -20.6, .22, { float: false, anim: 'steam' }],
+  ['desk.steam', -2.97, -0.85, -20.6, .2, { float: false, anim: 'steam' }],
+  ['desk.books', 1.35, -1.02, -20.7, 1.25, { float: false }],
+  ['desk.perfume', 2.25, -1.01, -20.65, .5, { float: false }],
 
   // ── 3. 台北 101 夜景（z ≈ -41）──────────────────
   ['taipei.skyline', 0, -2.2, -42, 16, { float: false }],
@@ -42,14 +47,20 @@ export const items = [
   ['taipei.firework', 5.2, 2.8, -42, 2.2, { anim: 'pulse' }],
   ['taipei.firework', 1.2, 3.4, -43, 1.8, { anim: 'pulse' }],
 
-  // ── 4. 東京鐵塔櫻花（z ≈ -61）──────────────────
-  ['tokyo.fuji', -1, -1.2, -66, 9, { float: false }],
+  // ── 4. 春天的東京鐵塔（z ≈ -61）──────────────────
   ['tokyo.cloud', -3, 3, -63, 2.8],
   ['tokyo.cloud', 6.5, 3.2, -64, 2.4],
+  ['tokyo.swallow', -4, 3.1, -62, .7, { float: false, anim: 'glide' }],
+  ['tokyo.swallow', 1, 3.5, -63, .55, { float: false, anim: 'glide' }],
+  ['tokyo.cityBack', 0, -0.9, -63, 18, { float: false }],
   ['tokyo.tokyoTower', 3, 0.2, -61, 2, { float: false }],
+  ['tokyo.cityFront', 0, -2.3, -60.2, 16, { float: false }],
+  ['tokyo.park', 0, -2.75, -58.9, 14, { float: false }],
   ['tokyo.sakuraTree', 5.8, -1.5, -59, 3, { float: false }],
-  ['tokyo.sakuraTree', -5, -1.6, -60, 3.2, { float: false }],
-  ['tokyo.sakuraTree', 1, -2.4, -57.5, 2, { float: false }],
+  ['tokyo.sakuraTree', -5, -1.6, -59.6, 3.2, { float: false }],
+  ['tokyo.sakuraTree', -2.6, -1.7, -58.6, 2.2, { float: false }],
+  ['tokyo.butterfly', -1.2, -0.2, -57, .35, { float: false, anim: 'flutter' }],
+  ['tokyo.butterfly', -3.6, 0.6, -58.5, .28, { float: false, anim: 'flutter' }],
 ];
 
 // 台北的星星
@@ -80,5 +91,5 @@ export const themes = {
   home:    { paper: '#eaf0dc', ink: '#2b2622' },
   about:   { paper: '#f5e9d6', ink: '#2b2622' },
   work:    { paper: '#1c2340', ink: '#f3ecdf' },
-  contact: { paper: '#fbe9ee', ink: '#2b2622' },
+  contact: { paper: '#e2eef2', ink: '#2b2622' },
 };

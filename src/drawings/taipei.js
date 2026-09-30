@@ -18,25 +18,25 @@ export default {
       s.wash(seg, '#3d6b7c', .85);
       s.stroke(seg, { closed: true, w: 4 });
       for (let k = 0; k < 4; k++) for (let c = 0; c < 4; c++) {
-        if (s.r() > .35) s.dot(122 + c * 25, y + 18 + k * 20, 4.5, WINDOW);
+        if (s.fixed() > .35) s.dot(122 + c * 25, y + 18 + k * 20, 4.5, WINDOW);
       }
     }
     // 底座
     const base = [[70, 990], [250, 990], [270, 1270], [50, 1270]];
     s.wash(base, '#2f5566', .9); s.stroke(base, { closed: true, w: 4 });
     for (let k = 0; k < 9; k++) for (let c = 0; c < 6; c++) {
-      if (s.r() > .4) s.dot(90 + c * 28, 1015 + k * 28, 4.5, WINDOW);
+      if (s.fixed() > .4) s.dot(90 + c * 28, 1015 + k * 28, 4.5, WINDOW);
     }
   }},
   skyline: { w: 1536, h: 384, ink: CHALK, draw(s) {
     let x = 0;
     while (x < 1536) {
-      const bw = 70 + s.r() * 90, bh = 100 + s.r() * 220;
+      const bw = 70 + s.fixed() * 90, bh = 100 + s.fixed() * 220;
       const b = rect(x, 384 - bh, bw, bh);
-      s.wash(b, ['#2a3558', '#34416a', '#26304f'][Math.floor(s.r() * 3)], .95);
+      s.wash(b, ['#2a3558', '#34416a', '#26304f'][Math.floor(s.fixed() * 3)], .95);
       s.stroke(b.slice(0, 3).concat([[x + bw, 384]]), { w: 3 });
       for (let wy = 384 - bh + 20; wy < 370; wy += 26) for (let wx = x + 14; wx < x + bw - 12; wx += 22) {
-        if (s.r() > .55) s.dot(wx, wy, 3.5, WINDOW);
+        if (s.fixed() > .55) s.dot(wx, wy, 3.5, WINDOW);
       }
       x += bw + 6;
     }

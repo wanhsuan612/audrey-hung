@@ -1,5 +1,27 @@
-// 場景 4：東京鐵塔與櫻花（Contact Me）
-import { ellipse } from '../sketch.js';
+// 場景 4：春天的東京鐵塔（Contact Me）
+import { ellipse, rect } from '../sketch.js';
+
+// 白天的大樓群；gapFrom~gapTo 之間留空給鐵塔
+function building({ w, h, minH, maxH, gapFrom = -1, gapTo = -1 }) {
+  return { w, h, draw(s) {
+    let x = 0;
+    while (x < w) {
+      const bw = 80 + s.fixed() * 110, bh = minH + s.fixed() * (maxH - minH);
+      const color = ['#efe8da', '#dfe4e6', '#e9dcc6', '#d8ddd2', '#f3eee6'][Math.floor(s.fixed() * 5)];
+      const lit = s.fixed();
+      if (x + bw > gapFrom && x < gapTo) { x += bw + 8; continue; }
+      const b = rect(x, h - bh, bw, bh);
+      s.wash(b, color, .95); s.stroke(b, { closed: true, w: 3.5 });
+      // 窗戶
+      for (let wy = h - bh + 22; wy < h - 20; wy += 30) {
+        for (let wx = x + 14; wx < x + bw - 22; wx += 26) s.wash(rect(wx, wy, 12, 16), lit > .5 ? '#a9c3d4' : '#c9d6dc', .9);
+      }
+      // 屋頂小細節
+      if (bh > (minH + maxH) / 2) s.stroke([[x + bw / 2, h - bh], [x + bw / 2, h - bh - 24]], { w: 3 });
+      x += bw + 8;
+    }
+  }};
+}
 
 const TOWER_RED = '#e8503a';
 
@@ -40,14 +62,41 @@ export default {
     s.wash(trunk, '#6b4a3a', .85); s.stroke(trunk, { closed: true, w: 4 });
     const top = ellipse(256, 200, 220, 160, 90, .18, 9);
     s.wash(top, '#f8c8d4', .8); s.hatch(top, '#e87d98', { gap: 18, angle: .6 }); s.stroke(top, { closed: true });
-    for (let i = 0; i < 14; i++) s.dot(80 + s.r() * 350, 90 + s.r() * 220, 8, '#ffffff');
+    for (let i = 0; i < 14; i++) s.dot(80 + s.fixed() * 350, 90 + s.fixed() * 220, 8, '#ffffff');
   }},
-  fuji: { w: 1024, h: 384, draw(s) {
-    const m = [[40, 380], [420, 70], [600, 70], [990, 380]];
-    s.wash(m, '#9fb4d6', .75);
-    const snow = [[420, 70], [600, 70], [680, 140], [630, 130], [585, 160], [540, 125], [495, 165], [450, 130], [360, 150]];
-    s.wash(snow, '#ffffff', .95);
-    s.stroke(m, { w: 5 });
+  // 鐵塔周圍白天的港區大樓
+  cityBack: building({ w: 1536, h: 512, minH: 180, maxH: 470, gapFrom: 950, gapTo: 1230 }),
+  cityFront: building({ w: 1536, h: 320, minH: 90, maxH: 250 }),
+  // 鐵塔腳下的芝公園
+  park: { w: 1536, h: 256, draw(s) {
+    const top = Array.from({ length: 25 }, (_, i) => [i * 64, 70 + Math.sin(i * .6) * 10]);
+    s.wash([...top, [1536, 256], [0, 256]], '#a8d08d', .9);
+    s.stroke(top, { w: 5 });
+    for (let i = 0; i < 9; i++) { // 圓圓的樹叢
+      const cx = 80 + i * 170 + s.fixed() * 40;
+      const bush = ellipse(cx, 80, 70, 38, 40, .12, 5);
+      s.wash(bush, '#7fb069', .85); s.stroke(bush, { closed: true, w: 4 });
+    }
+    for (let i = 0; i < 30; i++) {
+      const x = s.fixed() * 1500 + 18, y = 150 + s.fixed() * 90;
+      s.stroke([[x - 8, y], [x, y - 16], [x + 8, y]], { w: 3, color: '#6a9955', passes: 1 });
+    }
+  }},
+  butterfly: { w: 192, h: 160, draw(s) {
+    const open = .45 + s.r() * .55; // 每個版本翅膀張開的角度不同 → 抖動時就像在拍翅
+    const wing = dir => [[96, 80], [96 + dir * 70 * open, 20], [96 + dir * 88 * open, 70], [96 + dir * 60 * open, 90], [96 + dir * 70 * open, 135], [96, 92]];
+    [-1, 1].forEach(d => { s.wash(wing(d), '#f6c85f', .9); s.stroke(wing(d), { closed: true, w: 4 }); });
+    s.dot(96 + 40 * open, 50, 7, '#f2a65a'); s.dot(96 - 40 * open, 50, 7, '#f2a65a');
+    s.stroke([[96, 60], [96, 115]], { w: 7 });
+    s.stroke([[96, 60], [84, 36]], { w: 3 }); s.stroke([[96, 60], [108, 36]], { w: 3 });
+  }},
+  swallow: { w: 256, h: 160, draw(s) {
+    const body = [[40, 70], [110, 62], [150, 70], [110, 84]];
+    s.wash(body, '#2f3e5c', .9); s.stroke(body, { closed: true, w: 3 });
+    s.wash([[112, 66], [140, 20], [132, 68]], '#2f3e5c', .9); s.stroke([[112, 66], [140, 20], [132, 68]], { w: 3 });
+    s.wash([[112, 80], [150, 130], [128, 80]], '#2f3e5c', .9); s.stroke([[112, 80], [150, 130], [128, 80]], { w: 3 });
+    s.stroke([[150, 70], [210, 58]], { w: 3 }); s.stroke([[150, 72], [212, 88]], { w: 3 });
+    s.dot(58, 72, 6, '#e4572e');
   }},
   cloud: { w: 512, h: 320, draw(s) {
     const pts = ellipse(256, 175, 185, 95, 90, .2, 7);

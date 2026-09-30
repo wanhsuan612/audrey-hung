@@ -93,6 +93,21 @@ export function createScene(canvas) {
         mesh.scale.setScalar(.3 + k * .9);
         mesh.userData.pulse = 1 - k * k;
       }
+      if (opts.anim === 'flutter') { // 蝴蝶：忽上忽下地飛
+        mesh.position.x = base.x + Math.sin(time * .45 + pl.offset) * 1.2;
+        mesh.position.y = base.y + Math.sin(time * 1.7 + pl.offset) * .25 + Math.sin(time * .6) * .2;
+        mesh.rotation.z = Math.cos(time * .45 + pl.offset) * .25;
+      }
+      if (opts.anim === 'glide') { // 燕子：從右到左滑過天空，飛出畫面後再回來
+        mesh.position.x = 9 - ((9 - base.x + time * .9) % 18);
+        mesh.position.y = base.y + Math.sin(time * .7 + pl.offset) * .3;
+      }
+      if (opts.anim === 'steam') { // 咖啡熱氣：往上飄、淡出
+        const k = ((time * .3 + pl.offset * .5) % 1);
+        mesh.position.y = base.y + k * .45;
+        mesh.scale.setScalar(.8 + k * .5);
+        mesh.userData.pulse = Math.sin(k * Math.PI) * .8;
+      }
 
       // 遠處的紙片淡入、快撞到鏡頭時淡出
       const dz = z - mesh.position.z;

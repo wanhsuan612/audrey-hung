@@ -13,7 +13,8 @@ export function rng(seed) {
   };
 }
 
-export function sketcher(g, r, ink = INK) {
+// r: 每個版本不同（線條抖動用）；fixed: 每個版本相同（決定形狀、位置用，才不會跟著抖動變形）
+export function sketcher(g, r, ink = INK, fixed = r) {
   const j = a => (r() - .5) * 2 * a;
 
   function densify(pts, step = 14, closed = false) {
@@ -62,7 +63,7 @@ export function sketcher(g, r, ink = INK) {
 
   function text(str, x, y, { size = 48, font = 'Caveat', weight = 700, color = ink, align = 'center', rot = 0 } = {}) {
     g.save(); g.translate(x + j(1.5), y + j(1.5)); g.rotate(rot + j(.02));
-    g.fillStyle = color; g.font = `${weight} ${size}px "${font}"`; g.textAlign = align; g.textBaseline = 'middle';
+    g.fillStyle = color; g.font = `${weight} ${size}px ${font.includes(',') ? font : `"${font}"`}`; g.textAlign = align; g.textBaseline = 'middle';
     g.fillText(str, 0, 0); g.restore();
   }
 
@@ -70,7 +71,7 @@ export function sketcher(g, r, ink = INK) {
     g.beginPath(); g.arc(x + j(1), y + j(1), rad * (1 + j(.15)), 0, Math.PI * 2); g.fillStyle = color; g.fill();
   }
 
-  return { stroke, wash, hatch, text, dot, r, j, g, ink };
+  return { stroke, wash, hatch, text, dot, r, j, g, ink, fixed };
 }
 
 // 點列產生器
@@ -109,7 +110,7 @@ export function makeTextures(def, seed) {
   return [0, 1, 2].map(v => {
     const c = document.createElement('canvas'); c.width = def.w; c.height = def.h;
     const g = c.getContext('2d'); g.lineCap = 'round'; g.lineJoin = 'round';
-    def.draw(sketcher(g, rng(seed * 100 + v + 1), def.ink), def.w, def.h);
+    def.draw(sketcher(g, rng(seed * 100 + v + 1), def.ink, rng(seed * 100)), def.w, def.h);
     const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4;
     return t;
   });

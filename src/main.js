@@ -10,8 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 // 等字型載好再畫圖（日曆和卡片會用到）
 await Promise.all([
-  document.fonts.load('700 72px Caveat'),
-  document.fonts.load('700 40px "LXGW WenKai TC"', '0123456789月日火水木金土曜'),
+  document.fonts.load('700 72px Caveat'),  document.fonts.load('700 40px "LXGW WenKai TC"', '0123456789月日火水木金土曜'),
 ]);
 
 const { render } = createScene(document.getElementById('bg'));
