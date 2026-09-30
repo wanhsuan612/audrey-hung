@@ -70,9 +70,9 @@ export default {
     const board = roundRect(30, 60, 196, 270, 10);
     s.wash(board, CREAM, .97); fine(s, board, { closed: true });
     s.wash(rect(30, 60, 196, 52), BRICK, .75);
-    s.text(`${today.getMonth() + 1}月`, 128, 88, { size: 30, font: 'LXGW WenKai TC', color: CREAM });
+    s.text(`${today.getMonth() + 1}月`, 128, 88, { size: 30, font: 'LXGW WenKai TC', weight: 400, color: CREAM });
     s.text(String(today.getDate()), 128, 200, { size: 130, color: today.getDay() === 0 ? BRICK : INK });
-    s.text(`${WEEKDAY}曜日`, 128, 295, { size: 26, font: 'LXGW WenKai TC' });
+    s.text(`${WEEKDAY}曜日`, 128, 295, { size: 26, font: 'LXGW WenKai TC', weight: 400 });
   }},
 
   desk: { w: 1024, h: 512, ink: INK, draw(s) {

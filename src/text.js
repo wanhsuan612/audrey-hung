@@ -24,7 +24,7 @@ export function setupText() {
     rotate: () => gsap.utils.random(-90, 90), opacity: 0, ease: 'none',
     scrollTrigger: { trigger: '#home', start: 'top top', end: 'bottom top', scrub: true },
   });
-  gsap.to('#home .sub, .hint', {
+  gsap.to('.hint', {
     opacity: 0, y: -40,
     scrollTrigger: { trigger: '#home', start: 'top top', end: '40% top', scrub: true },
   });
@@ -44,7 +44,7 @@ export function setupText() {
     y: 50, opacity: 0, rotate: () => gsap.utils.random(-6, 6), stagger: .15, duration: .8, ease: 'back.out(1.6)',
     scrollTrigger: { trigger: '#about', start: 'top 50%', toggleActions: 'play none none reverse' },
   });
-  gsap.from('.day li', {
+  gsap.from('.tags li, .day li', {
     x: -24, opacity: 0, stagger: .1, duration: .6, ease: 'back.out(2)', delay: .4,
     scrollTrigger: { trigger: '#about', start: 'top 50%', toggleActions: 'play none none reverse' },
   });
@@ -56,7 +56,7 @@ export function setupText() {
   });
 
   // 聯絡資訊
-  gsap.from('#contact .mail, #contact .socials a', {
+  gsap.from('#contact .open, #contact .mail, #contact .socials a', {
     y: 30, opacity: 0, stagger: .1, duration: .6, ease: 'back.out(1.8)',
     scrollTrigger: { trigger: '#contact', start: 'top 50%', toggleActions: 'play none none reverse' },
   });
