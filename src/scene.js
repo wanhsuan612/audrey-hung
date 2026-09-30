@@ -50,9 +50,12 @@ export function createScene(canvas) {
     p.petal = { speed: .25 + pr() * .35, sway: pr() * 6, spin: (pr() - .5) * 2 };
   }
 
+  // 超寬螢幕時，場景最寬只到 MAX_ASPECT（和 style.css 的 --max-aspect 一致），置中顯示
+  const MAX_ASPECT = 2.1;
   function resize() {
-    renderer.setSize(innerWidth, innerHeight, false);
-    camera.aspect = innerWidth / innerHeight;
+    const width = Math.min(innerWidth, innerHeight * MAX_ASPECT);
+    renderer.setSize(width, innerHeight, false);
+    camera.aspect = width / innerHeight;
     camera.fov = camera.aspect < 1 ? 70 : 50;
     camera.updateProjectionMatrix();
   }

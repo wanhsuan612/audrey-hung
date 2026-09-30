@@ -1,4 +1,9 @@
-:root { --paper: #eaf0dc; --ink: #2b2622; --accent: #e4572e; }
+:root {
+  --paper: #eaf0dc; --ink: #2b2622; --accent: #e4572e;
+  /* 超寬螢幕時，整個網站限制在最寬 2.1:1 的舞台裡（和 scene.js 的 MAX_ASPECT 一致） */
+  --stage: min(100vw, 210vh);
+  --side: calc((100vw - var(--stage)) / 2);
+}
 * { box-sizing: border-box; }
 html, body { margin: 0; }
 body {
@@ -28,7 +33,11 @@ a, button {
 }
 
 /* 3D 背景 */
-#bg { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; z-index: 0; }
+#bg { position: fixed; top: 0; left: var(--side); width: var(--stage); height: 100vh; display: block; z-index: 0; }
+@media (min-aspect-ratio: 21/10) {
+  #bg { -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+        mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent); }
+}
 
 /* 紙張顆粒感 */
 .grain {
@@ -40,7 +49,7 @@ a, button {
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 5;
   display: flex; justify-content: space-between; align-items: center;
-  padding: 18px clamp(16px, 4vw, 48px);
+  padding: 18px calc(var(--side) + clamp(16px, 4vw, 48px));
 }
 nav .logo { font-size: 30px; font-weight: 700; text-decoration: none; }
 nav .links { display: flex; gap: clamp(12px, 3vw, 32px); font-size: 24px; font-weight: 700; }
@@ -53,12 +62,12 @@ nav .links a::after, .socials a::after {
 nav .links a:hover::after, .socials a:hover::after { transform: scaleX(1) rotate(-2deg); }
 
 /* 滾動進度：手繪鉛筆線 */
-.progress { position: fixed; right: clamp(8px, 2vw, 28px); top: 50%; transform: translateY(-50%); height: 50vh; width: 30px; z-index: 5; }
+.progress { position: fixed; right: calc(var(--side) + clamp(8px, 2vw, 28px)); top: 50%; transform: translateY(-50%); height: 50vh; width: 30px; z-index: 5; }
 .progress path { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
 .progress .track { opacity: .15; }
 
 main { position: relative; z-index: 2; }
-section { position: relative; padding: 0 clamp(16px, 8vw, 120px); }
+section { position: relative; padding: 0 calc(var(--side) + clamp(16px, 8vw, 120px)); }
 .inner { position: sticky; top: 20vh; display: flex; flex-direction: column; }
 
 /* 1. 首頁 */
@@ -72,14 +81,16 @@ section { position: relative; padding: 0 clamp(16px, 8vw, 120px); }
 #contact { height: 160vh; }
 #about .inner { align-items: flex-end; }
 #work .inner { align-items: flex-start; top: 14vh; }
-#contact .inner { align-items: flex-start; top: 28vh; }
+#contact .inner { align-items: flex-start; top: 22vh; }
+.note.contact-note { transform: rotate(-1deg); width: fit-content; max-width: 100%; }
+.contact-note .mail { display: inline-block; }
 
-h2 { font-size: clamp(52px, 7.5vw, 120px); margin: 0 0 .15em; font-weight: 700; line-height: 1; }
+h2 { font-size: clamp(48px, min(7.5vw, 13vh), 120px); margin: 0 0 .15em; font-weight: 700; line-height: 1; }
 
 /* 手繪邊框的便條紙 */
 .note {
   font-family: 'Patrick Hand', cursive;
-  font-size: clamp(17px, 1.8vw, 22px); line-height: 1.6;
+  font-size: clamp(15px, min(1.8vw, 2.7vh), 22px); line-height: 1.6;
   max-width: 26em; padding: 18px 24px;
   background: color-mix(in srgb, var(--paper) 85%, transparent);
   border: 2.5px solid var(--ink);
@@ -94,7 +105,7 @@ h2 { font-size: clamp(52px, 7.5vw, 120px); margin: 0 0 .15em; font-weight: 700; 
 .tags { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; padding: 0; }
 .tags:has(+ .day[hidden]) { margin-bottom: 4px; }
 .tags li {
-  font-family: 'Caveat', cursive; font-size: 22px; font-weight: 700; line-height: 1; padding: 5px 14px 6px;
+  font-family: 'Caveat', cursive; font-size: clamp(17px, 2.9vh, 22px); font-weight: 700; line-height: 1; padding: 5px 14px 6px;
   border: 2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
   background: color-mix(in srgb, var(--accent) 14%, transparent);
 }
@@ -117,7 +128,7 @@ h2 { font-size: clamp(52px, 7.5vw, 120px); margin: 0 0 .15em; font-weight: 700; 
 /* 聯絡 */
 .visa { font-family: 'Patrick Hand', cursive; font-size: clamp(16px, 1.6vw, 20px); margin: 0 0 6px; opacity: .8; }
 .open { font-family: 'Patrick Hand', cursive; font-size: clamp(18px, 2vw, 24px); margin: 0 0 4px; }
-.mail { font-family: 'Caveat', cursive; font-size: clamp(34px, 4.4vw, 60px); color: var(--accent); text-decoration: none; margin: 4px 0 12px; }
+.mail { font-family: 'Caveat', cursive; font-size: clamp(28px, min(4vw, 7vh), 56px); overflow-wrap: anywhere; color: var(--accent); text-decoration: none; margin: 4px 0 12px; }
 .socials { display: flex; gap: 28px; font-size: 30px; font-weight: 700; }
 
 .char { display: inline-block; white-space: pre; }
