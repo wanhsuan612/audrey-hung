@@ -53,7 +53,8 @@
             <li>Kubernetes</li>
             <li>AWS</li>
           </ul>
-          <ol class="day">
+          <!-- 一天的作息表：先隱藏，想顯示時拿掉 hidden -->
+          <ol class="day" hidden>
             <li><time>08:30</time><span>A latte and last night's logs</span></li>
             <li><time>10:00</time><span>Code review, then speeding up a slow query</span></li>
             <li><time>14:00</time><span>Sketching the next service's architecture on my iPad</span></li>
@@ -71,26 +72,26 @@
             <span class="when">Jul 2024 — Jan 2026</span>
             <strong>Core Tech</strong> · Full-Stack Engineer / Tech Lead
             <ul class="wins">
-              <li>Cut memory usage by 28% on a Laravel platform running on AWS EC2 through cross-environment performance tuning</li>
-              <li>Built a Docker image mirroring staging (Amazon Linux + php-fpm), adopted team-wide to debug staging-only issues locally</li>
-              <li>Automated a KPI data pipeline in Python (Django), saving 2 hours of manual work every week and moving metrics from weekly to daily</li>
+              <li>Cut memory usage by 28% on a Laravel app on AWS EC2</li>
+              <li>Built a staging-parity Docker image, adopted team-wide</li>
+              <li>Automated a KPI pipeline in Django, saving 2 hours a week</li>
             </ul>
           </li>
           <li class="note">
             <span class="when">Apr 2021 — Mar 2024</span>
             <strong>Trend Micro</strong> · Software Engineer
             <ul class="wins">
-              <li>Built an egress API gateway in FastAPI, cutting third-party API provisioning from about a week to same-day</li>
-              <li>Modernized a legacy portal from Laravel 5.2 to 8, containerized it and moved it to Kubernetes with CI/CD</li>
-              <li>Owned weekly ingestion of millions of security telemetry records from Redshift, Azure Data Lake and Databricks into MongoDB</li>
+              <li>Built a FastAPI gateway: API access from 1 week to same-day</li>
+              <li>Upgraded Laravel 5.2 → 8 and moved it to Kubernetes</li>
+              <li>Ingested millions of security records into MongoDB weekly</li>
             </ul>
           </li>
           <li class="note">
             <span class="when">Oct 2019 — Apr 2021</span>
             <strong>TripSaaS</strong> · Backend Web Developer
             <ul class="wins">
-              <li>Built core backend components and APIs for a greenfield B2B platform (Laravel, PostgreSQL, Kubernetes)</li>
-              <li>Shipped B2C campaign modules with rate limiting, input validation and anti-abuse controls</li>
+              <li>Built core APIs for a greenfield B2B platform</li>
+              <li>Shipped B2C campaigns with rate limiting and anti-abuse</li>
             </ul>
           </li>
         </ol>

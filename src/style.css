@@ -80,6 +80,7 @@ h2 { font-size: clamp(52px, 7.5vw, 120px); margin: 0 0 .15em; font-weight: 700; 
 .about-note { max-width: 28em; transform: rotate(1.2deg); }
 .about-note .lead { margin: 0 0 12px; }
 .tags { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; padding: 0; }
+.tags:has(+ .day[hidden]) { margin-bottom: 4px; }
 .tags li {
   font-family: 'Caveat', cursive; font-size: 22px; font-weight: 700; line-height: 1; padding: 5px 14px 6px;
   border: 2px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
