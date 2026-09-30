@@ -9,6 +9,18 @@ body {
 }
 a { color: inherit; }
 
+/* 滑鼠游標：手繪太陽（熱點在太陽中心）；滑到連結上會轉一下、變成暖橘色 */
+html {
+  cursor: url(/cursor.png) 16 16, auto;
+  cursor: -webkit-image-set(url(/cursor.png) 1x, url(/cursor@2x.png) 2x) 16 16, auto;
+  cursor: image-set(url(/cursor.png) 1x, url(/cursor@2x.png) 2x) 16 16, auto;
+}
+a, button {
+  cursor: url(/cursor-hover.png) 16 16, pointer;
+  cursor: -webkit-image-set(url(/cursor-hover.png) 1x, url(/cursor-hover@2x.png) 2x) 16 16, pointer;
+  cursor: image-set(url(/cursor-hover.png) 1x, url(/cursor-hover@2x.png) 2x) 16 16, pointer;
+}
+
 /* 載入畫面 */
 .loader {
   position: fixed; inset: 0; z-index: 10; display: grid; place-items: center;
@@ -115,4 +127,13 @@ h2 { font-size: clamp(52px, 7.5vw, 120px); margin: 0 0 .15em; font-weight: 700; 
   #about .inner { align-items: flex-start; }
   nav .links { font-size: 20px; }
   .timeline .note:nth-child(even) { margin-left: 0; }
+}
+
+/* ?og：社群分享預覽圖（1200×630）用 */
+.og nav, .og .progress, .og .hint { display: none; }
+.og #home::after {
+  content: "Software Engineer · Tokyo"; margin-top: 10px;
+  font-size: 54px; font-weight: 700; color: var(--accent); transform: rotate(-2deg);
+  padding: 0 22px 4px; background: color-mix(in srgb, var(--paper) 90%, transparent);
+  border: 2.5px solid var(--ink); border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
 }

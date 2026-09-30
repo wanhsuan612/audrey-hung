@@ -8,6 +8,9 @@ import { setupText } from './text.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// ?og：產生社群分享預覽圖用的乾淨畫面（見 README）
+if (new URLSearchParams(location.search).has('og')) document.documentElement.classList.add('og');
+
 // 等字型載好再畫圖（日曆和卡片會用到）
 await Promise.all([
   document.fonts.load('700 72px Caveat'),

@@ -36,3 +36,13 @@ npm run preview  # 預覽打包結果
 
    `w`、`h` 填圖片的寬高（用來算比例），只給一張圖也可以。
 3. 如果大小或位置不對，到 `src/layout.js` 調整。
+
+## 分享預覽圖與網址
+
+- 部署後，把 `.env` 的 `VITE_SITE_URL` 改成正式網址（例如 `https://audreyhung.com`），LinkedIn 等平台才抓得到預覽圖。
+- 預覽圖 `public/og-image.jpg` 是網站首頁加上 `?og` 的截圖。改了首頁想重新產生時，先執行 `npm run dev`，再執行：
+
+  ```bash
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars --force-device-scale-factor=1 --use-angle=swiftshader --enable-unsafe-swiftshader --window-size=1200,630 --timeout=7000 --screenshot=og.png "http://localhost:5173/?og"
+  sips -s format jpeg -s formatOptions 88 og.png --out public/og-image.jpg && rm og.png
+  ```
