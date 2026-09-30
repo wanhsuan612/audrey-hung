@@ -56,7 +56,7 @@ export function setupText() {
   });
 
   // 聯絡資訊
-  gsap.from('#contact .open, #contact .mail, #contact .socials a', {
+  gsap.from('#contact .open, #contact .visa, #contact .mail, #contact .socials a', {
     y: 30, opacity: 0, stagger: .1, duration: .6, ease: 'back.out(1.8)',
     scrollTrigger: { trigger: '#contact', start: 'top 50%', toggleActions: 'play none none reverse' },
   });
