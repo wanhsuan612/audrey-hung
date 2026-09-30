@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Audrey Hung</title>
+  <meta name="description" content="Audrey 的個人網站：從森林出發，一路走到台北和東京。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=LXGW+WenKai+TC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="loader">loading…</div>
+  <canvas id="bg"></canvas>
+  <div class="grain"></div>
+
+  <nav>
+    <a href="#home" class="logo">Audrey ✎</a>
+    <div class="links">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <svg class="progress" viewBox="0 0 30 400" preserveAspectRatio="none" aria-hidden="true">
+    <path class="track" d="M15 5 C 25 50, 5 90, 15 135 S 25 220, 15 265 S 5 350, 15 395"/>
+    <path class="bar" d="M15 5 C 25 50, 5 90, 15 135 S 25 220, 15 265 S 5 350, 15 395"/>
+  </svg>
+
+  <main>
+    <section id="home">
+      <h1 class="split-hero">Hi, I'm Audrey</h1>
+      <p class="sub">從森林出發，一路走到台北和東京</p>
+      <div class="hint">scroll ↓</div>
+    </section>
+
+    <section id="about">
+      <div class="inner">
+        <h2 class="reveal">About Me</h2>
+        <p class="note reveal">這裡放你的自我介紹。桌上的東西就是我的日常：Mac 和外接螢幕是工作夥伴，iPad 用來畫圖，還有一瓶木質調香水、一副玫瑰金細框眼鏡，和一本每天撕一頁的日本日曆。</p>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="inner">
+        <h2 class="reveal">Work Experience</h2>
+        <ol class="timeline">
+          <li class="note">
+            <span class="when">2024 — 現在</span>
+            <strong>公司名稱</strong>・職稱
+            <p>一句話描述你在這裡做了什麼、最有成就感的事。</p>
+          </li>
+          <li class="note">
+            <span class="when">2022 — 2024</span>
+            <strong>公司名稱</strong>・職稱
+            <p>一句話描述你在這裡做了什麼、最有成就感的事。</p>
+          </li>
+          <li class="note">
+            <span class="when">2020 — 2022</span>
+            <strong>公司名稱</strong>・職稱
+            <p>一句話描述你在這裡做了什麼、最有成就感的事。</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="inner">
+        <h2 class="reveal">Contact Me</h2>
+        <a class="mail" href="mailto:hello@example.com">hello@example.com</a>
+        <div class="socials">
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">GitHub</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
