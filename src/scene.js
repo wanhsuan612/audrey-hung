@@ -52,10 +52,16 @@ export function createScene(canvas) {
 
   // 超寬螢幕時，場景最寬只到 MAX_ASPECT（和 style.css 的 --max-aspect 一致），置中顯示
   const MAX_ASPECT = 2.1;
+  // 手機滑動時網址列會伸縮，只改變畫面高度；觸控裝置只在寬度改變（例如轉向）時才重算，避免畫面跳動
+  const isTouch = matchMedia('(pointer: coarse)').matches;
+  let lastWidth = 0;
   function resize() {
-    const width = Math.min(innerWidth, innerHeight * MAX_ASPECT);
-    renderer.setSize(width, innerHeight, false);
-    camera.aspect = width / innerHeight;
+    if (isTouch && innerWidth === lastWidth) return;
+    lastWidth = innerWidth;
+    const height = canvas.clientHeight || innerHeight; // CSS 用 100lvh，高度固定
+    const width = Math.min(innerWidth, height * MAX_ASPECT);
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
     camera.fov = camera.aspect < 1 ? 70 : 50;
     camera.updateProjectionMatrix();
   }

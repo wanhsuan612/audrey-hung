@@ -33,7 +33,7 @@ a, button {
 }
 
 /* 3D 背景 */
-#bg { position: fixed; top: 0; left: var(--side); width: var(--stage); height: 100vh; display: block; z-index: 0; }
+#bg { position: fixed; top: 0; left: var(--side); width: var(--stage); height: 100vh; height: 100lvh; display: block; z-index: 0; }
 @media (min-aspect-ratio: 21/10) {
   #bg { -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
         mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent); }
@@ -135,6 +135,11 @@ h2 { font-size: clamp(48px, min(7.5vw, 13vh), 120px); margin: 0 0 .15em; font-we
 
 .char { display: inline-block; white-space: pre; }
 .ci { display: inline-block; }
+
+/* 觸控裝置：紙張顆粒層不用混合模式，滑動時比較順、導覽列不會抖 */
+@media (pointer: coarse) {
+  .grain { mix-blend-mode: normal; opacity: .25; }
+}
 
 @media (max-width: 700px) {
   #about .inner { align-items: flex-start; }

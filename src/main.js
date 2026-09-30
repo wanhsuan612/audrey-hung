@@ -7,6 +7,8 @@ import { themes } from './layout.js';
 import { setupText } from './text.js';
 
 gsap.registerPlugin(ScrollTrigger);
+// 手機網址列伸縮時不重新計算捲動動畫，避免文字卡片跳動
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 // ?og：產生社群分享預覽圖用的乾淨畫面（見 README）
 if (new URLSearchParams(location.search).has('og')) document.documentElement.classList.add('og');
@@ -20,7 +22,7 @@ await Promise.all([
 const { render } = createScene(document.getElementById('bg'));
 
 /* 平滑滾動 */
-const lenis = new Lenis({ lerp: .08 });
+const lenis = new Lenis({ lerp: .08, syncTouch: false }); // 觸控用手機原生捲動，不另外做平滑
 lenis.on('scroll', ScrollTrigger.update);
 if (import.meta.env.DEV) window.lenis = lenis; // 開發時方便從 console 測試捲動
 document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', e => {
