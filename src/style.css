@@ -10,7 +10,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: 'Caveat', cursive;
-  overflow-x: hidden;
+  /* 不在 body 設 overflow：iPhone Safari 上會讓 sticky 的文字卡片在滑動時抖動 */
 }
 a { color: inherit; }
 
@@ -66,12 +66,13 @@ nav .links a:hover::after, .socials a:hover::after { transform: scaleX(1) rotate
 .progress path { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
 .progress .track { opacity: .15; }
 
-main { position: relative; z-index: 2; overflow-x: clip; } /* 開場標題四散的字母不會把頁面撐寬 */
+main { position: relative; z-index: 2; }
 section { position: relative; padding: 0 calc(var(--side) + clamp(16px, 8vw, 120px)); }
 .inner { position: sticky; top: 20vh; display: flex; flex-direction: column; }
 
 /* 1. 首頁 */
-#home { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+/* 開場標題四散的字母不會把頁面撐寬。只裁首頁：sticky 卡片的外層若有 overflow 裁切，iPhone Safari 滑動時卡片會抖 */
+#home { overflow-x: clip; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 #home h1 { font-size: clamp(64px, 13vw, 210px); margin: 0; line-height: .9; font-weight: 700; }
 .hint { position: absolute; bottom: 6vh; font-size: 26px; animation: bob 1.6s ease-in-out infinite; }
 @keyframes bob { 50% { transform: translateY(8px); } }
