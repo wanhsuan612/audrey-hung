@@ -50,22 +50,19 @@ export function createScene(canvas) {
     p.petal = { speed: .25 + pr() * .35, sway: pr() * 6, spin: (pr() - .5) * 2 };
   }
 
-  // 超寬螢幕時，場景最寬只到 MAX_ASPECT（和 style.css 的 --max-aspect 一致），置中顯示
-  const MAX_ASPECT = 2.1;
-  // 手機滑動時網址列會伸縮，只改變畫面高度；觸控裝置只在寬度改變（例如轉向）時才重算，避免畫面跳動
-  const isTouch = matchMedia('(pointer: coarse)').matches;
-  let lastWidth = 0;
-  function resize() {
-    if (isTouch && innerWidth === lastWidth) return;
-    lastWidth = innerWidth;
-    const height = canvas.clientHeight || innerHeight; // CSS 用 100lvh，高度固定
-    const width = Math.min(innerWidth, height * MAX_ASPECT);
+  // 畫布顯示的大小由 CSS 決定（寬：最多螢幕高度的 2.1 倍；高：100lvh，手機網址列伸縮時不變）。
+  // 每一幀比對顯示大小和繪製尺寸，不一致就校正，畫面比例永遠正確、不會被拉長
+  let drawnWidth = 0, drawnHeight = 0;
+  function syncSize() {
+    const width = canvas.clientWidth, height = canvas.clientHeight;
+    if (!width || !height || (width === drawnWidth && height === drawnHeight)) return;
+    drawnWidth = width; drawnHeight = height;
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.fov = camera.aspect < 1 ? 70 : 50;
     camera.updateProjectionMatrix();
   }
-  addEventListener('resize', resize); resize();
+  syncSize();
 
   function cameraAt(p) {
     let i = 0; while (i < cameraKeys.length - 2 && p > cameraKeys[i + 1][0]) i++;
@@ -78,6 +75,7 @@ export function createScene(canvas) {
 
   // progress: 滾動進度 0~1，mouse: 滑鼠位置 -1~1，time: 秒
   function render(progress, mouse, time) {
+    syncSize();
     const dt = Math.min(.1, time - lastTime); lastTime = time;
     const [x, y, z] = cameraAt(progress);
     camera.position.set(x + mouse.x * .4, y - mouse.y * .3, z);

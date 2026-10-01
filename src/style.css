@@ -1,6 +1,6 @@
 :root {
   --paper: #eaf0dc; --ink: #2b2622; --accent: #e4572e;
-  /* 超寬螢幕時，整個網站限制在最寬 2.1:1 的舞台裡（和 scene.js 的 MAX_ASPECT 一致） */
+  /* 超寬螢幕時，整個網站限制在最寬 2.1:1 的舞台裡（3D 畫布也跟著這個寬度） */
   --stage: min(100vw, 210vh);
   --side: calc((100vw - var(--stage)) / 2);
 }
