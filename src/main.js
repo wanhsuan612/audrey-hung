@@ -21,12 +21,17 @@ await Promise.all([
 
 const { render } = createScene(document.getElementById('bg'));
 
-/* 平滑滾動 */
-const lenis = new Lenis({ lerp: .08, syncTouch: false }); // 觸控用手機原生捲動，不另外做平滑
-lenis.on('scroll', ScrollTrigger.update);
+/* 平滑滾動：只在滑鼠裝置啟用。
+ * 觸控裝置（特別是 iPhone Safari）用原生捲動，Lenis 會和系統的慣性滾動互相拉扯而造成抖動 */
+const isTouch = matchMedia('(pointer: coarse)').matches;
+const lenis = isTouch ? null : new Lenis({ lerp: .08 });
+lenis?.on('scroll', ScrollTrigger.update);
 if (import.meta.env.DEV) window.lenis = lenis; // 開發時方便從 console 測試捲動
 document.querySelectorAll('nav a').forEach(a => a.addEventListener('click', e => {
-  e.preventDefault(); lenis.scrollTo(a.getAttribute('href'));
+  e.preventDefault();
+  const target = a.getAttribute('href');
+  if (lenis) lenis.scrollTo(target);
+  else document.querySelector(target).scrollIntoView({ behavior: 'smooth' });
 }));
 
 /* 整頁滾動進度 → 鏡頭 */
@@ -35,10 +40,13 @@ gsap.to(state, { p: 1, ease: 'none', scrollTrigger: { trigger: 'main', start: 't
 
 /* 滑鼠微視差 */
 const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
-addEventListener('pointermove', e => { mouse.tx = e.clientX / innerWidth * 2 - 1; mouse.ty = e.clientY / innerHeight * 2 - 1; });
+addEventListener('pointermove', e => {
+  if (e.pointerType !== 'mouse') return; // 手指滑動不算，避免滑動時鏡頭跟著晃
+  mouse.tx = e.clientX / innerWidth * 2 - 1; mouse.ty = e.clientY / innerHeight * 2 - 1;
+});
 
 gsap.ticker.add(time => {
-  lenis.raf(time * 1000);
+  lenis?.raf(time * 1000);
   mouse.x += (mouse.tx - mouse.x) * .05; mouse.y += (mouse.ty - mouse.y) * .05;
   render(state.p, mouse, time);
 });
