@@ -1,48 +1,94 @@
-# Audrey Hung — 個人網站
+# Audrey Hung — Personal Website
 
-手繪繪本風的 3D 滾動網站：森林 → 辦公桌（About）→ 台北 101 夜景（Work）→ 東京鐵塔櫻花（Contact）。
+An interactive, scroll-driven 3D portfolio with a hand-drawn storybook aesthetic. As the visitor scrolls, the camera travels through four illustrated scenes, each hosting a section of the site:
 
-技術：[Vite](https://vite.dev) + [Three.js](https://threejs.org) + [GSAP ScrollTrigger](https://gsap.com) + [Lenis](https://lenis.darkroom.engineering)
+| Scene | Section |
+|---|---|
+| Forest | Intro |
+| A backend engineer's desk | About Me |
+| Taipei 101 at night | Work Experience |
+| Tokyo Tower in spring | Side Projects · Contact |
 
-## 開發
+**Live site:** https://audrey-hung.audrey-35921.workers.dev
+
+![Preview](public/og-image.jpg)
+
+## Highlights
+
+- **Procedural illustration, zero image assets.** Every drawing is generated at runtime with the Canvas 2D API — wobbly ink strokes, watercolor washes and cross-hatching — then mapped onto planes in a Three.js scene.
+- **Line-boil animation.** Each drawing is rendered in three slightly different variations and cycled, giving the classic hand-animated "boiling line" effect. A seeded PRNG keeps shapes stable while only the strokes jitter.
+- **Scroll-driven camera.** A keyframed camera path (`src/layout.js`) is scrubbed by GSAP ScrollTrigger; closely spaced keyframes let the camera linger while each section is read.
+- **Ambient motion.** Falling sakura petals, fireworks, rising coffee steam, gliding swallows and fluttering butterflies, plus subtle mouse parallax.
+- **Per-section theming.** Background and ink colors transition between sections (e.g. a dark palette for the Taipei night scene).
+- **Mobile-first robustness.** Smooth scrolling via Lenis on pointer devices, native scrolling on touch devices, and fixes for iOS Safari address-bar resizing and sticky-element jitter.
+- **Social previews.** Open Graph metadata and a reproducible preview image generated from the live page.
+
+## Tech Stack
+
+- [Three.js](https://threejs.org) — 3D scene and rendering
+- [GSAP + ScrollTrigger](https://gsap.com) — scroll-linked camera and text animations
+- [Lenis](https://lenis.darkroom.engineering) — smooth scrolling
+- [Vite](https://vite.dev) — dev server and build
+- [Cloudflare Workers](https://developers.cloudflare.com/workers/static-assets/) — static hosting
+
+## Getting Started
+
+Requires Node.js 20+.
 
 ```bash
 npm install
-npm run dev      # 開發伺服器
-npm run build    # 打包到 dist/
-npm run preview  # 預覽打包結果
+npm run dev       # start the dev server at http://localhost:5173
+npm run build     # production build to dist/
+npm run preview   # serve the production build locally
 ```
 
-## 檔案結構
+## Project Structure
 
-| 檔案 | 用途 |
+```
+├── index.html             # Page content: intro, about, work, projects, contact
+├── public/                # Static assets: favicons, cursors, Open Graph image
+└── src/
+    ├── main.js            # Entry point: scrolling, camera progress, theme transitions
+    ├── scene.js           # Three.js scene, line boil, petals and other animations
+    ├── layout.js          # Object placement, camera keyframes, section color themes
+    ├── sketch.js          # Hand-drawn brush toolkit and texture generation
+    ├── text.js            # Text reveal animations
+    ├── style.css          # Layout and typography
+    └── drawings/          # Procedural drawings for each scene
+        ├── forest.js
+        ├── desk.js
+        ├── taipei.js
+        └── tokyo.js
+```
+
+Most visual tweaks — where objects sit, how the camera moves, and each section's colors — live in `src/layout.js`.
+
+## Configuration
+
+| Variable | Description |
 |---|---|
-| `index.html` | 所有文字內容（自我介紹、工作經歷、聯絡方式） |
-| `src/layout.js` | **最常改的檔案**：物件位置、鏡頭路線、每段背景色 |
-| `src/drawings/*.js` | 四個場景的手繪圖案（目前是程式畫的佔位圖） |
-| `src/scene.js` | Three.js 場景、線條抖動、櫻花飄落 |
-| `src/text.js` | 文字動畫 |
-| `src/sketch.js` | 手繪筆刷工具 |
-| `src/style.css` | 版面樣式 |
+| `VITE_SITE_URL` | Canonical site URL (no trailing slash), used for the Open Graph URL and preview image. Set in `.env`. |
 
-## 換成自己的手繪圖
+## Deployment
 
-1. 畫好去背 PNG（建議畫 3 張略有不同的版本，就會有線條抖動效果），放到 `public/assets/`
-2. 在 `src/drawings/` 對應的檔案裡，把該圖案的定義換成：
+The site is deployed as static assets on Cloudflare Workers (see `wrangler.jsonc`):
 
-   ```js
-   pine: { w: 320, h: 512, images: ['/assets/pine-1.png', '/assets/pine-2.png', '/assets/pine-3.png'] },
-   ```
+```bash
+npm run build
+npx wrangler deploy
+```
 
-   `w`、`h` 填圖片的寬高（用來算比例），只給一張圖也可以。
-3. 如果大小或位置不對，到 `src/layout.js` 調整。
+### Regenerating the Open Graph image
 
-## 分享預覽圖與網址
+`public/og-image.jpg` is a 1200×630 screenshot of the home page with the `?og` query flag, which hides UI chrome. With the dev server running:
 
-- 部署後，把 `.env` 的 `VITE_SITE_URL` 改成正式網址（例如 `https://audreyhung.com`），LinkedIn 等平台才抓得到預覽圖。
-- 預覽圖 `public/og-image.jpg` 是網站首頁加上 `?og` 的截圖。改了首頁想重新產生時，先執行 `npm run dev`，再執行：
+```bash
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars \
+  --force-device-scale-factor=1 --use-angle=swiftshader --enable-unsafe-swiftshader \
+  --window-size=1200,630 --timeout=7000 --screenshot=og.png "http://localhost:5173/?og"
+sips -s format jpeg -s formatOptions 88 og.png --out public/og-image.jpg && rm og.png
+```
 
-  ```bash
-  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars --force-device-scale-factor=1 --use-angle=swiftshader --enable-unsafe-swiftshader --window-size=1200,630 --timeout=7000 --screenshot=og.png "http://localhost:5173/?og"
-  sips -s format jpeg -s formatOptions 88 og.png --out public/og-image.jpg && rm og.png
-  ```
+## License
+
+© Audrey Hung. All rights reserved. The source is shared for reference; please don't reuse the design or content without permission.
